@@ -1,0 +1,23 @@
+doctype html
+head(lang='en')
+  meta(charset='utf-8')
+  title Schanj
+  meta(name="description", content="")
+  link(rel='stylesheet', href='./styles/main.processed.css')
+body
+  #input
+    span.currency $US
+    input(type="number", name="input")
+  #display
+    .container
+      p.currency Gourdes
+      p.result 1209
+  #rate-selector
+    select
+      option BRH
+      option Unibank
+      option Sogebank
+    .type
+      button Achat
+      button.active Vente
+  script(type="text/javascript", src="./scripts/index.processed.js")
