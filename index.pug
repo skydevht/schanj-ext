@@ -15,10 +15,14 @@ body
       p.result 1209
   #rate-selector
     select
-      option BRH
-      option Unibank
-      option Sogebank
+      option(value="brh") BRH
+      option(value="capital") Capital
+      option(value="bnc") BNC
+      option(value="sogebank") Sogebank
+      option(value="unibank") Unibank
+      option(value="bph") BPH
+      option(value="buh") BUH
     .type
-      button Achat
-      button.active Vente
+      button.active Achat
+      button Vente
   script(type="text/javascript", src="./scripts/index.js")
