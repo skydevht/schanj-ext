@@ -7,12 +7,13 @@ head(lang='en')
   link(rel='stylesheet', href='./styles/main.css')
 body
   #input
-    span.currency $US
-    input(type="number", name="input")
+    span.currency US
+    input(type="number", name="input", value="1")
   #display
     .container
-      p.currency Gourdes
-      p.result 1209
+      p.currency HTG
+      input.result(readonly)
+  hr
   #rate-selector
     select
       option(value="brh") BRH
@@ -25,4 +26,12 @@ body
     .type
       button.active Achat
       button Vente
+  hr
+  #refresh
+    .meta
+      p.title Dernière mise à jour:
+      p.time 15/02/2019
+    button.refresh: img(src="./assets/image/refresh.svg", height="24px", width="24px")
+  footer.footer
+    p.brand #[b SCHANJ] by #[a(href="https://skydev.tech") Skydev]
   script(type="text/javascript", src="./scripts/index.js")

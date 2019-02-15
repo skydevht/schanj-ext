@@ -1,6 +1,6 @@
 // Logic Variables
 var mainCurrency = 'us'; // us or htg
-var currentBank = 1; // Can't be zero
+var currentBank = 'brh'; // default's BRH
 var rateType = 'buy'; // Whether the bank is selling (sell) or buying (buy) foreign
 var defaultRates = {
   brh: {
@@ -69,6 +69,7 @@ function changeCurrency() {
   }
   // Refresh the rate
   changeRate();
+  calculate();
 }
 /**
  * Calculate the displayed value with the entry and the current rate
@@ -77,7 +78,7 @@ function changeCurrency() {
 function calculate() {
   var entry = Number(inputEntry.value);
   var result = entry * currentRate;
-  displayResult.textContent = result.toFixed(2);
+  displayResult.value = result.toFixed(2);
 }
 /**
  * This loads the rates list and store theme in the local storage
@@ -169,3 +170,9 @@ sellButton.addEventListener('click', function () {
 });
 // Recalculate on every entry change
 inputEntry.addEventListener('input', calculate)
+
+loadRates()
+changeRate();
+calculate();
+
+

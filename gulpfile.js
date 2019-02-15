@@ -22,6 +22,11 @@ function js() {
     .pipe(dest('build/scripts'));
 }
 
+function assets() {
+  return src('assets/**/*')
+    .pipe(dest('build/assets'));
+}
+
 function def() {
   browserSync.init({
     server: 'build',
@@ -32,7 +37,14 @@ function def() {
   gulp.watch('scripts/*.js', js);
 }
 
+function firefox() {
+  return src('firefox/**/*')
+    .pipe(dest('build'));
+}
+
 exports.js = js;
 exports.css = css;
 exports.html = html;
+exports.assets = assets;
+exports.firefox = firefox;
 exports.default = def;

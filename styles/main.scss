@@ -2,23 +2,48 @@
  * index.scss
  * - Add any styles you want here!
  */
-$grey-background: #e6e6e6;
+$grey-background: #e4d9ff;
 $grey-text: #777;
-$primary: #3F72AF;
+$primary: #181e37;
 html, body {
     margin: 0;
     padding: 0;
 }
 body {
+    width: 400px;
     background: white;
+    font-family: "sans-serif";
 }
 
 button {
     cursor: pointer;
     user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border: 1px solid transparent;
+    line-height: 1.5;
+    background-color: $grey-background;
+    border-radius: 4px;
 }
+
+input {
+    font-family: inherit;
+    background: transparent;
+    min-width: 0;
+    border: 0;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
+    height: 1px;
+    background: $grey-background;
+    border-width: 0;
+}
+
 #input {
     display: flex;
+    align-items: center;
     padding: 16px;
     background-color: $grey-background;
     .currency {
@@ -29,9 +54,6 @@ button {
     }
     input {
         flex-grow: 1;
-        background: transparent;
-        min-width: 0;
-        border: 0;
         outline: 0;
         font-size: 24px;
         text-align: right;
@@ -42,7 +64,7 @@ button {
     padding: 16px;
     .container {
         padding: 16px;
-        background-color: #e6e6e6;
+        background-color: $grey-background;
         border-radius: 4px;
         .currency {
             cursor: pointer;
@@ -54,6 +76,8 @@ button {
             margin: 0;
             font-size: 36px;
             text-align: right;
+            width: 100%;
+            max-width: 100%;
         }
     }
 }
@@ -67,15 +91,10 @@ button {
         font-size: 1rem;
         margin-bottom: 8px;
         line-height: 1.5;
-        border-radius: 1px solid #e6e6e6;
+        border-radius: 1px solid $grey-background;
     }
     button {
         flex-grow: 1;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        border: 1px solid transparent;
-        background-color: #e6e6e6;
-        line-height: 1.5;
 
         &.active {
             background-color: $primary;
@@ -89,5 +108,39 @@ button {
     .type {
         display: flex;
         width: 100%;
+    }
+}
+
+#refresh {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    .meta {
+        flex-grow: 1;
+        .title {
+            margin: 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: $grey-text;
+        }
+        .time {
+            margin: 0;
+            line-height: 1.5;
+        }
+    }
+    .refresh {
+        line-height: 1;
+    }
+}
+
+footer {
+    padding: 16px;
+    background: $primary;
+    p {
+        margin: 0;
+        color: white;
+        a {
+            color: white;
+        }
     }
 }
