@@ -1,3 +1,4 @@
+var store = browser.storage.local;
 // Logic Variables
 var mainCurrency = 'us'; // us or htg
 var currentBank = 'brh'; // default's BRH
@@ -36,13 +37,29 @@ var allRates = defaultRates;
 var currentRate = 1; // DisplayCurrency/InputCurrency
 
 // DOM Nodes
-var inputCurrency = document.querySelector('#input .currency');
-var inputEntry = document.querySelector('#input input');
+var inputCurrency = document.querySelector('#input .switch input');
+var inputEntry = document.querySelector('#input > input');
 var displayCurrency = document.querySelector('#display .currency');
 var displayResult = document.querySelector('#display .result');
 var bankSelector = document.querySelector('#rate-selector select');
 var buyButton = document.querySelector('#rate-selector .type button:first-child');
 var sellButton = document.querySelector('#rate-selector .type button:last-child');
+var loadingElement = document.querySelector('#refresh .loading');
+var refreshTimeElement = document.querySelector('#refresh .time');
+
+/**
+ * Format Date like dd/mm/yyyy
+ *
+ */
+function formatDate(date) {
+  result = "";
+  if (date) {
+    result += date.getDate() + "/"; // Day
+    result += (date.getMonth() + 1) + "/";
+    result += (date.getYear() + 1900);
+  }
+  return result;
+}
 
 /**
  * Refresh the current rate used for calculation
@@ -60,11 +77,11 @@ function changeRate () {
 function changeCurrency() {
   if (mainCurrency == 'us') {
     mainCurrency = 'htg';
-    inputCurrency.textContent = 'HTG'
+    inputCurrency.checked = true;
     displayCurrency.textContent = 'US'
   } else {
     mainCurrency = 'us';
-    inputCurrency.textContent = 'US'
+    inputCurrency.checked = false;
     displayCurrency.textContent = 'HTG'
   }
   // Refresh the rate
@@ -90,6 +107,7 @@ function loadRates() {
   xhr.onload = function() {
     if (xhr.status === 200) {
       var temp = JSON.parse(xhr.responseText);
+      // normalize the data
       for(i = 0; i < temp.length; i++) {
         var rate = temp[i];
         switch (rate.id) {
@@ -135,17 +153,39 @@ function loadRates() {
             break;
         }
       }
+      var refreshDate = new Date();
+      // Store in a local storage
+      store.set({
+        rates: allRates,
+        refresh: refreshDate,
+      });
+      // recalculate the display value
       changeRate();
       calculate();
+      // Manipulate the DOme
+      refreshTimeElement.textContent = formatDate(refreshDate);
+      loadingElement.style.opacity = 0;
     }
     else {
+      loadingElement.textContent = "Echec";
     }
   };
   xhr.send();
 }
 
 // Bind event Handler
-inputCurrency.addEventListener('click', changeCurrency);
+inputCurrency.addEventListener('change', function () {
+  if (inputCurrency.checked) {
+    mainCurrency = 'htg';
+    displayCurrency.textContent = 'US'
+  } else {
+    mainCurrency = 'us';
+    displayCurrency.textContent = 'HTG'
+  }
+  // Refresh the rate
+  changeRate();
+  calculate();
+});
 displayCurrency.addEventListener('click', changeCurrency);
 // Selecting a bank refresh the current rate and
 // recalculate the displayed value
@@ -174,5 +214,11 @@ inputEntry.addEventListener('input', calculate)
 loadRates()
 changeRate();
 calculate();
-
+store.get(['rates', 'refresh']).then(function(result) {
+  console.log(result);
+  if (result.rates) allRates = result.rates;
+  if (result.refresh) refreshTimeElement.textContent = formatDate(result.refresh);
+  changeRate();
+  calculate();
+});
 

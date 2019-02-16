@@ -7,7 +7,9 @@ head(lang='en')
   link(rel='stylesheet', href='./styles/main.css')
 body
   #input
-    span.currency US
+    label.switch
+      input(type="checkbox")
+      span.slider
     input(type="number", name="input", value="1")
   #display
     .container
@@ -30,8 +32,8 @@ body
   #refresh
     .meta
       p.title Dernière mise à jour:
-      p.time 15/02/2019
-    button.refresh: img(src="./assets/image/refresh.svg", height="24px", width="24px")
+      p.time Jamais
+    .loading Réactualisation
   footer.footer
     p.brand #[b SCHANJ] by #[a(href="https://skydev.tech") Skydev]
   script(type="text/javascript", src="./scripts/index.js")
